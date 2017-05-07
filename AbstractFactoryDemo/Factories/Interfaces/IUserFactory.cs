@@ -10,5 +10,6 @@ namespace AbstractFactoryDemo.Factories.Interfaces
     public interface IUserFactory
     {
         IUser CreateUser();
+        IUserIdentity CreateIdentity()
     }
 }
