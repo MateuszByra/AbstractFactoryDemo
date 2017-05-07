@@ -42,11 +42,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Factories\Interfaces\IUserFactory.cs" />
+    <Compile Include="Factories\Machine\MachineFactory.cs" />
+    <Compile Include="Factories\Person\PersonFactory.cs" />
+    <Compile Include="Interfaces\IUser.cs" />
+    <Compile Include="Interfaces\IUserIdentity.cs" />
+    <Compile Include="Models\IdentityCard.cs" />
+    <Compile Include="Models\MacAddress.cs" />
+    <Compile Include="Models\Machine.cs" />
+    <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\Producer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
