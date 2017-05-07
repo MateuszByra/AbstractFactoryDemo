@@ -12,7 +12,7 @@ namespace AbstractFactoryDemo
     {
         static void RegisterUser(IUserFactory userFactory)
         {
-            IUser user = userFactory.CreateUser();
+            //ITicketHolder holder = userFactory.CreateUser();
         }
 
         static void Main(string[] args)

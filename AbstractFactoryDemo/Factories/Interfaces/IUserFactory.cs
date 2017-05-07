@@ -9,7 +9,7 @@ namespace AbstractFactoryDemo.Factories.Interfaces
 {
     public interface IUserFactory
     {
-        IUser CreateUser();
-        IUserIdentity CreateIdentity()
+        IUser CreateUser(string name1, string name2);
+        IUserIdentity CreateIdentity();
     }
 }

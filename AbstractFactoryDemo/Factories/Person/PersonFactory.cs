@@ -11,9 +11,9 @@ namespace AbstractFactoryDemo.Factories.Person
 {
     public class PersonFactory : IUserFactory
     {
-        public IUser CreateUser()
+        public IUser CreateUser(string name1, string name2)
         {
-            return new Models.Person();
+            return new Models.Person(name1, name2);
         }
 
         public IUserIdentity CreateIdentity()

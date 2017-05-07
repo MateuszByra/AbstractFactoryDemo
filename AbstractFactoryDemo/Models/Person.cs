@@ -9,45 +9,24 @@ namespace AbstractFactoryDemo.Models
 {
     public class Person : IUser
     {
-        private string name { get; set; }
-        private string surname { get; set; }
+        public string Name { get; }
 
-        public Person()
+        public string Surname { get; }
+
+        public Person(string name, string surname)
         {
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentException("First name must be non-empty.");
+            if (string.IsNullOrEmpty(surname))
+                throw new ArgumentException("Last name must be non-empty.");
 
-        }
-
-        public string Name
-        {
-            get
-            {
-                return this.name;
-            }
-            set
-            {
-                if (string.IsNullOrEmpty(value))
-                    throw new ArgumentException("First name must be non-empty.");
-                this.name = value;
-            }
-        }
-
-        public string Surname
-        {
-            get
-            {
-                return this.surname;
-            }
-            set
-            {
-                if (string.IsNullOrEmpty(value))
-                    throw new ArgumentException("Last name must be non-empty.");
-                this.surname = value;
-            }
+            this.Name = name;
+            this.Surname = surname;
         }
 
         public void SetIdentity(IUserIdentity identity)
         {
-            throw new NotImplementedException();
+
         }
     }
 }
