@@ -9,24 +9,30 @@ namespace AbstractFactoryDemo.Models
 {
     public class Person : IUser
     {
-        public string Name { get; }
+        private string name { get; set; }
+        private string surname { get; set; }
 
-        public string Surname { get; }
-
-        public Person(string name, string surname)
+        public string Name
         {
-            if (string.IsNullOrEmpty(name))
-                throw new ArgumentException("First name must be non-empty.");
-            if (string.IsNullOrEmpty(surname))
-                throw new ArgumentException("Last name must be non-empty.");
+            get { return name; }
+            set { name = value; }
+        }
 
-            this.Name = name;
-            this.Surname = surname;
+        public string Surname
+        {
+            get { return surname; }
+            set { surname = value; }
         }
 
         public void SetIdentity(IUserIdentity identity)
         {
+            IdentityCard idCard = identity as IdentityCard;
 
+            if (idCard == null)
+                throw new ArgumentException();
+
+            Console.WriteLine("Accepted person identity card");
+            // do somethind with idCard
         }
     }
 }

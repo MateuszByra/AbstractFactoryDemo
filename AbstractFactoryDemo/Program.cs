@@ -1,4 +1,5 @@
 ﻿using AbstractFactoryDemo.Factories.Interfaces;
+using AbstractFactoryDemo.Factories.Person;
 using AbstractFactoryDemo.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,15 @@ namespace AbstractFactoryDemo
 
         static void Main(string[] args)
         {
+            IUserFactory factory = new PersonFactory();
+
+            IUser user = factory.CreateUser("Mateusz", "Byra");
+
+            IUserIdentity id = factory.CreateIdentity(); // new MacAddress(); break the substitution principle
+            user.SetIdentity(id);
+
+            Console.WriteLine("Reached end of demonstration...");
+            Console.ReadLine();
         }
     }
 }
