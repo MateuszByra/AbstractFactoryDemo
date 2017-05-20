@@ -27,5 +27,10 @@ namespace AbstractFactoryDemo.Models
         {
             
         }
+
+        public bool CanAcceptIdentity(IUserIdentity identity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

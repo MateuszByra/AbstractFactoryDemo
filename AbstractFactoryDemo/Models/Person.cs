@@ -26,13 +26,16 @@ namespace AbstractFactoryDemo.Models
 
         public void SetIdentity(IUserIdentity identity)
         {
-            IdentityCard idCard = identity as IdentityCard;
-
-            if (idCard == null)
+            if(!CanAcceptIdentity(identity))
                 throw new ArgumentException();
+
+            IdentityCard idCard = identity as IdentityCard;
 
             Console.WriteLine("Accepted person identity card");
             // do somethind with idCard
         }
+
+        public bool CanAcceptIdentity(IUserIdentity identity) =>
+            identity is IdentityCard;
     }
 }

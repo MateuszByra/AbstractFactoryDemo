@@ -11,19 +11,19 @@ namespace AbstractFactoryDemo
 {
     class Program
     {
-        static void RegisterUser(IUserFactory userFactory)
-        {
-            //ITicketHolder holder = userFactory.CreateUser();
-        }
-
-        static void Main(string[] args)
+        static void ConfigureUser()
         {
             IUserFactory factory = new PersonFactory();
 
             IUser user = factory.CreateUser("Mateusz", "Byra");
 
-            IUserIdentity id = factory.CreateIdentity(); // new MacAddress(); break the substitution principle
+            IUserIdentity id = factory.CreateIdentity();
             user.SetIdentity(id);
+        }
+
+        static void Main(string[] args)
+        {
+            ConfigureUser();
 
             Console.WriteLine("Reached end of demonstration...");
             Console.ReadLine();

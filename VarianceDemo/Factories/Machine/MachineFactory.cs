@@ -9,7 +9,7 @@ using VarianceDemo.Models;
 
 namespace VarianceDemo.Factories.Machine
 {
-    public class MachineFactory : IUserFactory
+    public class MachineFactory : IUserFactory<Models.Machine>
     {
         private Dictionary<string, Producer> NameToProducer { get; }
 
@@ -37,6 +37,12 @@ namespace VarianceDemo.Factories.Machine
         public IUserIdentity CreateIdentity()
         {
             return new MacAddress();
+        }
+
+        Models.Machine IUserFactory<Models.Machine>.CreateUser(string name1, string name2)
+        {
+            Producer producer = GetProducer(name1);
+            return new Models.Machine(producer, name2);
         }
     }
 }
