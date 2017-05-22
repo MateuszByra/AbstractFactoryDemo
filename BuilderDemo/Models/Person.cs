@@ -9,30 +9,17 @@ namespace BuilderDemo.Models
 {
     public class Person : IUser
     {
-        private string name { get; set; }
-        private string surname { get; set; }
+        public string Name { get; }
+        public string Surname { get; }
 
-        public string Name
+        public Person(string name, string surname)
         {
-            get { return name; }
-            set { name = value; }
-        }
-
-        public string Surname
-        {
-            get { return surname; }
-            set { surname = value; }
+            Name = name;
+            Surname = surname;
         }
 
         public void SetIdentity(IUserIdentity identity)
         {
-            if(!CanAcceptIdentity(identity))
-                throw new ArgumentException();
-
-            IdentityCard idCard = identity as IdentityCard;
-
-            Console.WriteLine("Accepted person identity card");
-            // do somethind with idCard
         }
 
         public bool CanAcceptIdentity(IUserIdentity identity) =>
