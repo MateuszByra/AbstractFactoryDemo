@@ -14,6 +14,12 @@ namespace BuilderDemo.Models
 
         public Person(string name, string surname)
         {
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentException();
+
+            if (string.IsNullOrEmpty(surname))
+                throw new ArgumentException();
+
             Name = name;
             Surname = surname;
         }
