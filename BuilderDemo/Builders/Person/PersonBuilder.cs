@@ -8,31 +8,29 @@ namespace BuilderDemo.Builders.Person
 {
     public class PersonBuilder
     {
-        private string FirstName { get; set; }
-        private string LastName { get; set; }
+        private Func<string> GetValidFirstName { get; set; } =
+            () => { throw new InvalidOperationException(); };
+
+        private Func<string> GetValidLastName { get; set; } =
+         () => { throw new InvalidOperationException(); };
 
         public void SetFirstName(string firstName)
         {
-            this.FirstName = firstName;
+            if (string.IsNullOrEmpty(firstName))
+                throw new ArgumentException();
+            this.GetValidFirstName = () => firstName;
         }
 
         public void SetLastName(string lastName)
         {
-            this.LastName = lastName;
+            if (string.IsNullOrEmpty(lastName))
+                throw new ArgumentException();
+            this.GetValidLastName = () => lastName;
         }
 
         public Models.Person Build()
         {
-            Validate();
-            return new Models.Person(FirstName, LastName);
-        }
-
-        private void Validate()
-        {
-            if (string.IsNullOrEmpty(this.FirstName) ||
-                string.IsNullOrEmpty(this.LastName))
-                throw new InvalidOperationException(); //invalid operation instead of argumentException
-            //because build method have no arguments
+            return new Models.Person(this.GetValidFirstName(), GetValidLastName());
         }
     }
 }
