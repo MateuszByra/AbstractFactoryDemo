@@ -18,6 +18,7 @@ namespace BuilderDemo
             builder.SetLastName("Byra");
 
             Person person = builder.Build();
+            Console.WriteLine(person);
         }
 
         static void Main(string[] args)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BuilderDemo.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,29 +9,22 @@ namespace BuilderDemo.Builders.Person
 {
     public class PersonBuilder
     {
-        private Func<string> GetValidFirstName { get; set; } =
-            () => { throw new InvalidOperationException(); };
-
-        private Func<string> GetValidLastName { get; set; } =
-         () => { throw new InvalidOperationException(); };
+        private INonEmptyStringState FirstNameState { get; set; } = new UninitializedString();
+        private INonEmptyStringState LastNameState { get; set; } = new UninitializedString();
 
         public void SetFirstName(string firstName)
         {
-            if (string.IsNullOrEmpty(firstName))
-                throw new ArgumentException();
-            this.GetValidFirstName = () => firstName;
+            this.FirstNameState = FirstNameState.Set(firstName);
         }
 
         public void SetLastName(string lastName)
         {
-            if (string.IsNullOrEmpty(lastName))
-                throw new ArgumentException();
-            this.GetValidLastName = () => lastName;
+            this.LastNameState = LastNameState.Set(lastName);
         }
 
         public Models.Person Build()
         {
-            return new Models.Person(this.GetValidFirstName(), GetValidLastName());
+            return new Models.Person(this.FirstNameState.Get(), this.LastNameState.Get());
         }
     }
 }

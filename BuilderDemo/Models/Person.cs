@@ -30,5 +30,7 @@ namespace BuilderDemo.Models
 
         public bool CanAcceptIdentity(IUserIdentity identity) =>
             identity is IdentityCard;
+
+        public override string ToString() => $"{Name} {Surname}";
     }
 }
