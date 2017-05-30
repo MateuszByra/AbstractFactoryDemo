@@ -43,12 +43,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builders\Person\PersonBuilder.cs" />
+    <Compile Include="Common\IPrimaryContactState.cs" />
     <Compile Include="Common\NonEmptyString.cs" />
+    <Compile Include="Common\UninitializedPrimaryContact.cs" />
     <Compile Include="Common\UninitializedString.cs" />
+    <Compile Include="Common\ValidPrimaryContact.cs" />
     <Compile Include="Factories\Interfaces\IUserFactory.cs" />
     <Compile Include="Factories\Machine\MachineFactory.cs" />
     <Compile Include="Factories\Person\PersonFactory.cs" />
     <Compile Include="Common\INonEmptyStringState.cs" />
+    <Compile Include="Interfaces\IContactInfo.cs" />
     <Compile Include="Interfaces\IUser.cs" />
     <Compile Include="Interfaces\IUserIdentity.cs" />
     <Compile Include="Models\IdentityCard.cs" />

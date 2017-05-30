@@ -32,5 +32,15 @@ namespace BuilderDemo.Models
         {
             throw new NotImplementedException();
         }
+
+        public void Add(IContactInfo contact)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetPrimaryContact(IContactInfo contact)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
