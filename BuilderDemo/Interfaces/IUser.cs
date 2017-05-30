@@ -6,14 +6,11 @@ using System.Threading.Tasks;
 
 namespace BuilderDemo.Interfaces
 {
-    public interface ITicketHolder
-    {
-
-    }
-
-    public interface IUser : ITicketHolder
+    public interface IUser
     {
         void SetIdentity(IUserIdentity identity);
         bool CanAcceptIdentity(IUserIdentity identity);
+        void Add(IContactInfo contact);
+        void SetPrimaryContact(IContactInfo contact);
     }
 }

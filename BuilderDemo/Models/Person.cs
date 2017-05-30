@@ -12,6 +12,9 @@ namespace BuilderDemo.Models
         public string Name { get; }
         public string Surname { get; }
 
+        private IList<IContactInfo> Contacts { get; } = new List<IContactInfo>();
+        private IContactInfo PrimaryContact { get; set; }
+
         public Person(string name, string surname)
         {
             if (string.IsNullOrEmpty(name))
@@ -32,5 +35,25 @@ namespace BuilderDemo.Models
             identity is IdentityCard;
 
         public override string ToString() => $"{Name} {Surname}";
+
+        public void Add(IContactInfo contact)
+        {
+            if (contact == null)
+                throw new ArgumentNullException();
+            if (Contacts.Contains(contact))
+                throw new ArgumentException();
+
+            Contacts.Add(contact);
+        }
+
+        public void SetPrimaryContact(IContactInfo contact)
+        {
+            if (contact == null)
+                throw new ArgumentNullException();
+            if (!Contacts.Contains(contact))
+                throw new ArgumentException();
+
+            PrimaryContact = contact;
+        }
     }
 }
