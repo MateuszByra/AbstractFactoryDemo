@@ -34,7 +34,22 @@ namespace BuilderDemo.Models
         public bool CanAcceptIdentity(IUserIdentity identity) =>
             identity is IdentityCard;
 
-        public override string ToString() => $"{Name} {Surname}";
+        public override string ToString() =>
+           $"{this.Name} {this.Surname} [{this.AllContactsLabel}]";
+
+        private string AllContactsLabel =>
+            string.Join(", ", this.AllContactLabels.ToArray());
+
+        private IEnumerable<string> AllContactLabels =>
+            this.Contacts.Select(this.GetLabelFor);
+
+        private string GetLabelFor(IContactInfo contact) =>
+            $"{GetUiMarkFor(contact)}{contact}";
+
+        private string GetUiMarkFor(IContactInfo contact) =>
+            this.IsPrimary(contact) ? "*" : string.Empty;
+
+        private bool IsPrimary(IContactInfo contact) => contact.Equals(this.PrimaryContact);
 
         public void Add(IContactInfo contact)
         {

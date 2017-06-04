@@ -1,4 +1,5 @@
 ﻿using BuilderDemo.Builders.Person;
+using BuilderDemo.Interfaces;
 using BuilderDemo.Models;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,11 @@ namespace BuilderDemo
 
             builder.SetFirstName("Mateusz");
             builder.SetLastName("Byra");
+
+            IContactInfo email = new EmailAddress("mat.byra@gmail.com");
+            builder.Add(email);
+            builder.Add(new EmailAddress("mat.byra2@gmail.com"));
+            builder.SetPrimaryContact(email);
 
             Person person = builder.Build();
             Console.WriteLine(person);
