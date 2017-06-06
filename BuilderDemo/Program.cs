@@ -22,6 +22,7 @@ namespace BuilderDemo
                 .WithSecondaryContact(new EmailAddress("mat.byra@wp.pl"))
                 .AndNoMoreContacts()
                 .Build();
+
             Console.WriteLine(person);
         }
 
