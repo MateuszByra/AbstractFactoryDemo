@@ -9,7 +9,7 @@ namespace BuilderDemo.Builders.Person.Interfaces
 {
     public interface IContactHolder
     {
-        IContactHolder Add(IContactInfo contact);
-        IPersonBuilder NoMoreContacts();
+        IContactHolder WithSecondaryContact(IContactInfo contact);
+        IPersonBuilder AndNoMoreContacts();
     }
 }

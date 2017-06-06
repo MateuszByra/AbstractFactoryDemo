@@ -9,6 +9,6 @@ namespace BuilderDemo.Builders.Person.Interfaces
 {
     public interface IPrimaryContactHolder
     {
-        IContactHolder SetPrimaryContact(IContactInfo contact);
+        IContactHolder WithPrimaryContact(IContactInfo contact);
     }
 }

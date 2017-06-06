@@ -3,6 +3,6 @@ namespace BuilderDemo.Builders.Person.Interfaces
 {
     public interface IFirstNameHolder
     {
-        ILastNameHolder SetFirstName(string name);
+        ILastNameHolder WithFirstName(string name);
     }
 }

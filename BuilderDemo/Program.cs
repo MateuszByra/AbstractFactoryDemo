@@ -14,12 +14,13 @@ namespace BuilderDemo
         static void ConfigureUser()
         {
             Person person =
-                new PersonBuilder()
-                .SetFirstName("Mateusz")
-                .SetLastName("Byra")
-                .SetPrimaryContact(new EmailAddress("mat.byra@gmail.com"))
-                .Add(new EmailAddress("mat.byra@wp.pl"))
-                .NoMoreContacts()
+                PersonBuilder
+                .Person()
+                .WithFirstName("Mateusz")
+                .WithLastName("Byra")
+                .WithPrimaryContact(new EmailAddress("mat.byra@gmail.com"))
+                .WithSecondaryContact(new EmailAddress("mat.byra@wp.pl"))
+                .AndNoMoreContacts()
                 .Build();
             Console.WriteLine(person);
         }

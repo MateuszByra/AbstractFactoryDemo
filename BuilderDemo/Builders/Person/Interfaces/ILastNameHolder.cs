@@ -8,6 +8,6 @@ namespace BuilderDemo.Builders.Person.Interfaces
 {
     public interface ILastNameHolder
     {
-        IPrimaryContactHolder SetLastName(string surname);
+        IPrimaryContactHolder WithLastName(string surname);
     }
 }
