@@ -24,17 +24,19 @@ namespace BuilderDemo.Builders.Person
             this.PrimaryContactState = new UninitializedPrimaryContact(this.Contacts.Contains);
         }
 
-        public void SetFirstName(string firstName)
+        public ILastNameHolder SetFirstName(string firstName)
         {
             this.FirstNameState = FirstNameState.Set(firstName);
+            return this;
         }
 
-        public void SetLastName(string lastName)
+        public IPrimaryContactHolder SetLastName(string lastName)
         {
             this.LastNameState = LastNameState.Set(lastName);
+            return this;
         }
 
-        public void Add(IContactInfo contact)
+        public IContactHolder Add(IContactInfo contact)
         {
             if (contact == null)
                 throw new ArgumentNullException();
@@ -43,14 +45,21 @@ namespace BuilderDemo.Builders.Person
                 throw new ArgumentException();
 
             Contacts.Add(contact);
+            return this;
         }
 
-        public void SetPrimaryContact(IContactInfo contact)
+        public IContactHolder SetPrimaryContact(IContactInfo contact)
         {
             if (contact == null)
                 throw new ArgumentNullException();
-
+            this.Add(contact);
             this.PrimaryContactState = PrimaryContactState.Set(contact);
+            return this;
+        }
+
+        public IPersonBuilder NoMoreContacts()
+        {
+            return this;
         }
 
         public Models.Person Build()
