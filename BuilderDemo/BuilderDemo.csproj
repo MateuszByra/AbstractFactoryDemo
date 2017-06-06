@@ -42,6 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builders\Person\Interfaces\IContactHolder.cs" />
+    <Compile Include="Builders\Person\Interfaces\IFirstNameHolder.cs" />
+    <Compile Include="Builders\Person\Interfaces\ILastNameHolder.cs" />
+    <Compile Include="Builders\Person\Interfaces\IPersonBuilder.cs" />
+    <Compile Include="Builders\Person\Interfaces\IPrimaryContactHolder.cs" />
     <Compile Include="Builders\Person\PersonBuilder.cs" />
     <Compile Include="Common\IPrimaryContactState.cs" />
     <Compile Include="Common\NonEmptyString.cs" />

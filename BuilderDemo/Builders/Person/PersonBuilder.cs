@@ -1,4 +1,5 @@
-﻿using BuilderDemo.Common;
+﻿using BuilderDemo.Builders.Person.Interfaces;
+using BuilderDemo.Common;
 using BuilderDemo.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 namespace BuilderDemo.Builders.Person
 {
     public class PersonBuilder
+        : IFirstNameHolder, ILastNameHolder, IPrimaryContactHolder, IContactHolder, IPersonBuilder
     {
         private INonEmptyStringState FirstNameState { get; set; } = new UninitializedString();
         private INonEmptyStringState LastNameState { get; set; } = new UninitializedString();
