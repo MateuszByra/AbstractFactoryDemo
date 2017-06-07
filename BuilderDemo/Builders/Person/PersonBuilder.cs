@@ -16,49 +16,47 @@ namespace BuilderDemo.Builders.Person
         private string LastName{ get; set; }
 
         private IContactInfo PrimaryContact { get; set; }
-        private IList<IContactInfo> Contacts { get; } = new List<IContactInfo>();
+        private IList<IContactInfo> Contacts { get; set; } = new List<IContactInfo>();
 
         public static IFirstNameHolder Person()=> new PersonBuilder();
 
-        public ILastNameHolder WithFirstName(string firstName)
-        {
-            if (string.IsNullOrEmpty(firstName))
-                throw new ArgumentException();
-            this.FirstName = firstName;
-            return this;
-        }
+        public ILastNameHolder WithFirstName(string firstName) =>
+            new PersonBuilder()
+            {
+                FirstName = firstName
+            };
 
-        public IPrimaryContactHolder WithLastName(string lastName)
-        {
-            if (string.IsNullOrEmpty(lastName))
-                throw new ArgumentException();
-            this.LastName = lastName;
-            return this;
-        }
+        public bool IsValidFirstName(string firstName) => !string.IsNullOrEmpty(firstName);
 
-        public IContactHolder WithSecondaryContact(IContactInfo contact)
-        {
-            if (contact == null)
-                throw new ArgumentNullException();
+        public IPrimaryContactHolder WithLastName(string lastName) =>
+            new PersonBuilder()
+            {
+                FirstName = this.FirstName,
+                LastName = lastName
+            };
 
-            if (Contacts.Contains(contact))
-                throw new ArgumentException();
+        public bool IsValidLastName(string surname) => !string.IsNullOrEmpty(surname);
 
-            Contacts.Add(contact);
-            return this;
-        }
+        public IContactHolder WithSecondaryContact(IContactInfo contact) =>
+            this.WithContact(contact);
 
         public IContactHolder WithPrimaryContact(IContactInfo contact)
         {
-            this.WithSecondaryContact(contact);
-            this.PrimaryContact = contact;
-            return this;
+            PersonBuilder builder =this.WithContact(contact);
+            builder.PrimaryContact = contact;
+            return builder;
         }
 
-        public IPersonBuilder AndNoMoreContacts()
-        {
-            return this;
-        }
+        private PersonBuilder WithContact(IContactInfo contact) =>
+            new PersonBuilder()
+            {
+                FirstName = this.FirstName,
+                LastName = this.LastName,
+                Contacts = new List<IContactInfo>(this.Contacts) { contact },
+                PrimaryContact=this.PrimaryContact
+            };
+
+        public IPersonBuilder AndNoMoreContacts() => this;
 
         public Models.Person Build()
         {
@@ -69,8 +67,10 @@ namespace BuilderDemo.Builders.Person
                 person.Add(contact);
             }
 
-            person.SetPrimaryContact(PrimaryContactState.Get());
+            person.SetPrimaryContact(this.PrimaryContact);
             return person;
         }
+
+        public bool Contains(IContactInfo contact) => this.Contacts.Contains(contact);
     }
 }
