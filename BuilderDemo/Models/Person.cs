@@ -9,23 +9,14 @@ namespace BuilderDemo.Models
 {
     public class Person : IUser
     {
-        public string Name { get; }
-        public string Surname { get; }
+        public string Name { get; internal set; }
+        public string Surname { get; internal set; }
 
-        private IList<IContactInfo> Contacts { get; } = new List<IContactInfo>();
-        private IContactInfo PrimaryContact { get; set; }
+        public IEnumerable<IContactInfo> Contacts => this.ContactsList;
+        public IContactInfo PrimaryContact { get; internal set; }
 
-        public Person(string name, string surname)
-        {
-            if (string.IsNullOrEmpty(name))
-                throw new ArgumentException();
-
-            if (string.IsNullOrEmpty(surname))
-                throw new ArgumentException();
-
-            Name = name;
-            Surname = surname;
-        }
+        internal IList<IContactInfo> ContactsList { get; } = new List<IContactInfo>();
+        internal Person() { }
 
         public void SetIdentity(IUserIdentity identity)
         {
@@ -50,25 +41,5 @@ namespace BuilderDemo.Models
             this.IsPrimary(contact) ? "*" : string.Empty;
 
         private bool IsPrimary(IContactInfo contact) => contact.Equals(this.PrimaryContact);
-
-        public void Add(IContactInfo contact)
-        {
-            if (contact == null)
-                throw new ArgumentNullException();
-            if (Contacts.Contains(contact))
-                throw new ArgumentException();
-
-            Contacts.Add(contact);
-        }
-
-        public void SetPrimaryContact(IContactInfo contact)
-        {
-            if (contact == null)
-                throw new ArgumentNullException();
-            if (!Contacts.Contains(contact))
-                throw new ArgumentException();
-
-            PrimaryContact = contact;
-        }
     }
 }

@@ -10,15 +10,15 @@ using System.Threading.Tasks;
 namespace BuilderDemo.Builders.Person
 {
     public class PersonBuilder
-        : IFirstNameHolder, ILastNameHolder, IPrimaryContactHolder, IContactHolder, IPersonBuilder
+        : IFirstNameHolder, ILastNameHolder, IPrimaryContactHolder, ISecondaryContactHolder, IPersonBuilder
     {
         private string FirstName { get; set; }
-        private string LastName{ get; set; }
+        private string LastName { get; set; }
 
         private IContactInfo PrimaryContact { get; set; }
         private IList<IContactInfo> Contacts { get; set; } = new List<IContactInfo>();
 
-        public static IFirstNameHolder Person()=> new PersonBuilder();
+        public static IFirstNameHolder Person() => new PersonBuilder();
 
         public ILastNameHolder WithFirstName(string firstName) =>
             new PersonBuilder()
@@ -37,40 +37,42 @@ namespace BuilderDemo.Builders.Person
 
         public bool IsValidLastName(string surname) => !string.IsNullOrEmpty(surname);
 
-        public IContactHolder WithSecondaryContact(IContactInfo contact) =>
-            this.WithContact(contact);
+        public ISecondaryContactHolder WithSecondaryContact(IContactInfo contact) =>
+       new PersonBuilder()
+       {
+           FirstName = this.FirstName,
+           LastName = this.LastName,
+           Contacts = new List<IContactInfo>(this.Contacts) { contact },
+           PrimaryContact = this.PrimaryContact
+       };
 
-        public IContactHolder WithPrimaryContact(IContactInfo contact)
-        {
-            PersonBuilder builder =this.WithContact(contact);
-            builder.PrimaryContact = contact;
-            return builder;
-        }
-
-        private PersonBuilder WithContact(IContactInfo contact) =>
-            new PersonBuilder()
-            {
-                FirstName = this.FirstName,
-                LastName = this.LastName,
-                Contacts = new List<IContactInfo>(this.Contacts) { contact },
-                PrimaryContact=this.PrimaryContact
-            };
+        public ISecondaryContactHolder WithPrimaryContact(IContactInfo contact) =>
+         new PersonBuilder()
+         {
+             FirstName = this.FirstName,
+             LastName = this.LastName,
+             Contacts = new List<IContactInfo>(this.Contacts) { contact },
+             PrimaryContact = contact
+         };
 
         public IPersonBuilder AndNoMoreContacts() => this;
 
+        public bool Contains(IContactInfo contact) => this.Contacts.Contains(contact);
+
         public Models.Person Build()
         {
-            var person = new Models.Person(this.FirstName, this.LastName);
+            var person = new Models.Person();
+            person.Name = this.FirstName;
+            person.Surname = this.LastName;
 
-            foreach(var contact in Contacts)
+            foreach (var contact in Contacts)
             {
-                person.Add(contact);
+                person.ContactsList.Add(contact);
             }
 
-            person.SetPrimaryContact(this.PrimaryContact);
+            person.PrimaryContact=this.PrimaryContact;
             return person;
         }
 
-        public bool Contains(IContactInfo contact) => this.Contacts.Contains(contact);
     }
 }

@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace BuilderDemo.Builders.Person.Interfaces
 {
-    public interface IPrimaryContactHolder
+    public interface ISecondaryContactHolder
     {
-        ISecondaryContactHolder WithPrimaryContact(IContactInfo contact);
+        ISecondaryContactHolder WithSecondaryContact(IContactInfo contact);
+        IPersonBuilder AndNoMoreContacts();
     }
 }

@@ -13,7 +13,7 @@ namespace BuilderDemo.Factories.Person
     {
         public IUser CreateUser(string name1, string name2)
         {
-            return new Models.Person(name1,name2);
+            return new Models.Person() { Name = name1, Surname = name2 };
         }
 
         public IUserIdentity CreateIdentity()

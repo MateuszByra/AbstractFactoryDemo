@@ -47,6 +47,7 @@
     <Compile Include="Builders\Person\Interfaces\ILastNameHolder.cs" />
     <Compile Include="Builders\Person\Interfaces\IPersonBuilder.cs" />
     <Compile Include="Builders\Person\Interfaces\IPrimaryContactHolder.cs" />
+    <Compile Include="Builders\Person\Interfaces\ISecondaryContactHolder.cs" />
     <Compile Include="Builders\Person\PersonBuilder.cs" />
     <Compile Include="Common\IPrimaryContactState.cs" />
     <Compile Include="Common\NonEmptyString.cs" />
