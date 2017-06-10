@@ -3,18 +3,24 @@ using System;
 
 namespace FactoryMethodDemo.Models
 {
-    public abstract class PersonalManager
+    public class PersonalManager
     {
+        public PersonalManager(Func<IUser> userFactory)
+        {
+            this.UserFactory = userFactory;
+
+        }
+
         public void Notify(string message)
         {
             this.Enqueue(this.GetPrimaryContact(), message);
         }
 
-        protected abstract IUser CreateUser();
+        private Func<IUser> UserFactory { get; }
 
         private IContactInfo GetPrimaryContact()
         {
-            return this.CreateUser().PrimaryContact;
+            return this.UserFactory().PrimaryContact;
         }
 
         private void Enqueue(IContactInfo contact ,string message)
