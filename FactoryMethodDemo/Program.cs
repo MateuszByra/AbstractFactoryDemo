@@ -1,4 +1,7 @@
-﻿using FactoryMethodDemo.Builders.Person;
+﻿using FactoryMethodDemo.Builders.Machine;
+using FactoryMethodDemo.Builders.Person;
+using FactoryMethodDemo.Factories;
+using FactoryMethodDemo.Interfaces;
 using FactoryMethodDemo.Models;
 using System;
 using System.Collections.Generic;
@@ -12,16 +15,7 @@ namespace FactoryMethodDemo
     {
         static void ConfigureUser()
         {
-            PersonalManager mgr = new PersonalManager(
-                PersonBuilder
-                    .Person()
-                    .WithFirstName("Mateusz")
-                    .WithLastName("Byra")
-                    .WithPrimaryContact(new EmailAddress("mat.byra@gmail.com"))
-                    .WithSecondaryContact(new EmailAddress("mat.byra@wp.pl"))
-                    .AndNoMoreContacts()
-                    .Build
-            );
+            PersonalManager mgr = new PersonalManager(UserFactories.MachineFactory);
             mgr.Notify("hello");
         }
 

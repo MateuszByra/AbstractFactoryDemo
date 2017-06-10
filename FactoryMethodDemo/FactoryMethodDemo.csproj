@@ -42,6 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builders\Interfaces\IMachineBuilder.cs" />
+    <Compile Include="Builders\Interfaces\IModelHolder.cs" />
+    <Compile Include="Builders\Interfaces\IOwned.cs" />
+    <Compile Include="Builders\Interfaces\IProducerHolder.cs" />
+    <Compile Include="Builders\Machine\MachineBuilder.cs" />
     <Compile Include="Builders\Person\Interfaces\IContactHolder.cs" />
     <Compile Include="Builders\Person\Interfaces\IFirstNameHolder.cs" />
     <Compile Include="Builders\Person\Interfaces\ILastNameHolder.cs" />
@@ -49,15 +54,18 @@
     <Compile Include="Builders\Person\Interfaces\IPrimaryContactHolder.cs" />
     <Compile Include="Builders\Person\Interfaces\ISecondaryContactHolder.cs" />
     <Compile Include="Builders\Person\PersonBuilder.cs" />
+    <Compile Include="Factories\UserFactories.cs" />
     <Compile Include="Interfaces\IContactInfo.cs" />
     <Compile Include="Interfaces\IUser.cs" />
     <Compile Include="Interfaces\IUserIdentity.cs" />
     <Compile Include="Models\EmailAddress.cs" />
     <Compile Include="Models\IdentityCard.cs" />
+    <Compile Include="Models\LegalEntity.cs" />
     <Compile Include="Models\MacAddress.cs" />
     <Compile Include="Models\Machine.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\PersonalManager.cs" />
+    <Compile Include="Models\PhoneNumber.cs" />
     <Compile Include="Models\Producer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -65,9 +73,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Builders\Interfaces\" />
-    <Folder Include="Builders\Machine\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
