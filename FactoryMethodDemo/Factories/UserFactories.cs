@@ -13,16 +13,25 @@ namespace FactoryMethodDemo.Factories
     public static class UserFactories
     {
         public static Func<IUser> MachineFactory =>
-                MachineBuilder
+            CreateMachineFactory(CreateLegalEntity);
+             
+
+        private static Func<IUser> CreateMachineFactory(Func<LegalEntity> ownerFactory) =>
+               MachineBuilder
                     .Machine()
                     .WithProducer(new Producer())
                     .WithModel("fast-one")
-                    .OwnedBy(
-                        new LegalEntity(
-                            "Big Co.",
-                            new EmailAddress("big@co"),
-                            new PhoneNumber(123, 45, 6789)))
-                            .Build;
+                    .OwnedBy(ownerFactory())
+                    .Build;
+
+        private static Func<LegalEntity> CreateLegalEntityFactory(Func<EmailAddress> emailAddressFactory) =>
+           ()=> new LegalEntity(
+                  "Big Co.",
+                  emailAddressFactory(),
+                  new PhoneNumber(123, 45, 6789));
+
+        private static Func<LegalEntity> CreateLegalEntity =>
+            CreateLegalEntityFactory(() => new Models.EmailAddress("big@co"));
 
         public static Func<IUser> PersonFactory =>
                 PersonBuilder
