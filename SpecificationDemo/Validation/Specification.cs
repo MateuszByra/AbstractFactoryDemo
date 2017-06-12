@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace SpecificationDemo.Validation
 {
-    class Specification
+    public abstract class Specification<T>
     {
+        public abstract bool IsSatisfiedBy(T obj);
     }
 }
