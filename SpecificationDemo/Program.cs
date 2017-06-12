@@ -40,13 +40,13 @@ namespace SpecificationDemo
             };
 
             Console.WriteLine("DISPLAYING IN USER INTERFACE");
-            DoSomethingWith(person, 
-               new Composite<Person> ((results)=>results.All(res=>res==true),
-                Spec<Person>.NotNull(p=>p.Name)
-                .And(Spec<Person>.NotNull(p=>p.Surname))
+            DoSomethingWith(person,
+               new Composite<Person>((results) => results.All(res => res == true),
+                Spec<Person>.NotNull(p => p.Name)
+                .And(Spec<Person>.NotNull(p => p.Surname))
                 .And(
-                    Spec<Person>.Null(p=>p.PrimaryContact)
-                    .Or(Spec<Person>.IsTrue(p=>p.Contacts.Contains(p.PrimaryContact))))));
+                    Spec<Person>.Null(p => p.PrimaryContact)
+                    .Or(Spec<Person>.IsTrue(p => p.Contacts.Contains(p.PrimaryContact))))));
 
             Console.WriteLine("SAVING TO DATABASE:");
             DoSomethingWith(person,
@@ -55,6 +55,25 @@ namespace SpecificationDemo
                 .And(Spec<Person>.NotNull(p => p.Contacts))
                 .And(Spec<Person>.IsTrue(p => p.Contacts.Contains(p.PrimaryContact))));
 
+            //Builder with specification
+            /*IUser user =
+                UserSpecification
+                    .ForPerson()
+                    .WithName("Mateusz")
+                    .WithSurname("Planck")
+                    .WithPrimaryContact(
+                        ContactSpecification
+                            .ForEmailAddress("mat.byra@gmail.com"))
+                    .WithAlternateContact(
+                        ContactSpecification
+                            .ForPhoneNumber()
+                            .WithCountryCode(1)
+                            .WithAreaCode(23)
+                            .WithNumber(456789))
+                     .AndNoMoreContacts()
+                     .Build();*/
+
+            Console.WriteLine();
             Console.ReadLine();
         }
     }
