@@ -1,5 +1,7 @@
 ﻿using SpecificationDemo.Interfaces;
 using SpecificationDemo.Models;
+using SpecificationDemo.Validation;
+using SpecificationDemo.Validation.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +12,9 @@ namespace SpecificationDemo
 {
     class Program
     {
-        static void DoSomethingWith(Person person,Func<Person,bool> predicate)
+        static void DoSomethingWith(Person person,Specification<Person> validator)
         {
-            if (!predicate(person))
+            if (!validator.IsSatisfiedBy(person))
             {
                 Console.WriteLine("Not applicable...");
                 return;
@@ -38,22 +40,20 @@ namespace SpecificationDemo
             };
 
             Console.WriteLine("DISPLAYING IN USER INTERFACE");
-            DoSomethingWith(person, (p) =>
-             p.Name != null &&
-             p.Surname != null &&
-             p.Contacts != null &&
-             (
-                 p.PrimaryContact == null ||
-                 p.Contacts.Contains(p.PrimaryContact)
-             ));
+            DoSomethingWith(person, 
+               new Composite<Person> ((results)=>results.All(res=>res==true),
+                Spec<Person>.NotNull(p=>p.Name)
+                .And(Spec<Person>.NotNull(p=>p.Surname))
+                .And(
+                    Spec<Person>.Null(p=>p.PrimaryContact)
+                    .Or(Spec<Person>.IsTrue(p=>p.Contacts.Contains(p.PrimaryContact))))));
 
             Console.WriteLine("SAVING TO DATABASE:");
-            DoSomethingWith(person, (p) =>
-            !string.IsNullOrEmpty(p.Name) &&
-            !string.IsNullOrEmpty(p.Surname) &&
-            p.Contacts != null &&
-            p.PrimaryContact != null &&
-            p.Contacts.Contains(p.PrimaryContact));
+            DoSomethingWith(person,
+                Spec<Person>.NonEmptyString(p => p.Name)
+                .And(Spec<Person>.NonEmptyString(p => p.Surname))
+                .And(Spec<Person>.NotNull(p => p.Contacts))
+                .And(Spec<Person>.IsTrue(p => p.Contacts.Contains(p.PrimaryContact))));
 
             Console.ReadLine();
         }

@@ -69,6 +69,14 @@
     <Compile Include="Models\Producer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validation\Infrastructure\Composite.cs" />
+    <Compile Include="Validation\Infrastructure\NonEmptyString.cs" />
+    <Compile Include="Validation\Infrastructure\NotNull.cs" />
+    <Compile Include="Validation\Infrastructure\Predicate.cs" />
+    <Compile Include="Validation\Infrastructure\Property.cs" />
+    <Compile Include="Validation\Infrastructure\Transform.cs" />
+    <Compile Include="Validation\Spec.cs" />
+    <Compile Include="Validation\Specification.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
