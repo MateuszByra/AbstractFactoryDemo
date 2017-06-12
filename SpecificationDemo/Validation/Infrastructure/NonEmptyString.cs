@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace SpecificationDemo.Validation.Infrastructure
 {
-    class NonEmptyString
+    public class NonEmptyString : Specification<string>
     {
+        public override bool IsSatisfiedBy(string obj)=>
+            !string.IsNullOrEmpty(obj);
     }
 }
