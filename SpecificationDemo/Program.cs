@@ -1,6 +1,9 @@
 ﻿using SpecificationDemo.Interfaces;
 using SpecificationDemo.Models;
+using SpecificationDemo.Specifications;
 using SpecificationDemo.Specifications.ContactInfo;
+using SpecificationDemo.Specifications.LegalEntity;
+using SpecificationDemo.Specifications.Producer;
 using SpecificationDemo.Specifications.User;
 using SpecificationDemo.Validation;
 using SpecificationDemo.Validation.Infrastructure;
@@ -57,27 +60,64 @@ namespace SpecificationDemo
             //    .And(Spec<Person>.NotNull(p => p.Contacts))
             //    .And(Spec<Person>.IsTrue(p => p.Contacts.Contains(p.PrimaryContact))));
 
-            //Builder with specification
-            IUser user =
-                UserSpecification
-                    .ForPerson()
-                    .WithName("Mateusz")
-                    .WithSurname("Byra")
-                    .WithPrimaryContact(
-                        ContactSpecification
-                            .ForEmailAddress("mat.byra@gmail.com"))
-                    .WithAlternateContact(
-                        ContactSpecification
-                            .ForPhoneNumber()
-                            .WithCountryCode(1)
-                            .WithAreaCode(23)
-                            .WithNumber(456789))
-                     .AndNoMoreContacts()
-                     .Build();
+            var user = GetMachine();
 
             Console.WriteLine(user);
             Console.WriteLine();
             Console.ReadLine();
+        }
+        
+
+        private static IUser GetMachine()
+        {
+            //Builder with specification
+            IUser user =
+                UserSpecification
+                    .ForMachine()
+                    .ProducedBy(
+                        ProducerSpecification
+                            .WithName("Big Co."))
+                     .WithModel("Shiny one")
+                     .OwnedBy(
+                        LegalEntitySpecification
+                            .Initialize()
+                            .WithCompanyName("Properties Co.")
+                            .WithEmailAddress(
+                                ContactSpecification.ForEmailAddress("one@prop"))
+                             .WithPhoneNumber(
+                                ContactSpecification
+                                    .ForPhoneNumber()
+                                    .WithCountryCode(1)
+                                    .WithAreaCode(23)
+                                    .WithNumber(456))
+                              //.WithOtherContact( TODO solve why it cannot convert from EmailAddress to IContactInfo
+                              //   ContactSpecification.ForEmailAddress("two@prop"))
+                               .AndNoMoreContacts())
+                       .Build();
+
+            return user;
+        }
+
+        private static IUser GetPerson()
+        {
+            //Builder with specification
+            IUser user =
+               UserSpecification
+                   .ForPerson()
+                   .WithName("Mateusz")
+                   .WithSurname("Byra")
+                   .WithPrimaryContact(
+                       ContactSpecification
+                           .ForEmailAddress("mat.byra@gmail.com"))
+                   .WithAlternateContact(
+                       ContactSpecification
+                           .ForPhoneNumber()
+                           .WithCountryCode(1)
+                           .WithAreaCode(23)
+                           .WithNumber(456789))
+                    .AndNoMoreContacts()
+                    .Build();
+            return user;
         }
     }
 }

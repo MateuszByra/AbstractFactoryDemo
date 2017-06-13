@@ -1,31 +1,25 @@
-﻿using SpecificationDemo.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Globalization;
+using SpecificationDemo.Interfaces;
 
 namespace SpecificationDemo.Models
 {
     public class EmailAddress : IContactInfo
     {
-        public string Address { get; set; }
+        public string Address { get; internal set; }
 
-        public override int GetHashCode()
-        {
-            return this.Address.ToLower().GetHashCode();
-        }
+        internal EmailAddress() { }
+
+        public override int GetHashCode() => this.Address.ToLower().GetHashCode();
 
         public override bool Equals(object obj)
         {
-
             EmailAddress email = obj as EmailAddress;
 
             if (email == null)
                 return false;
 
             return string.Compare(this.Address, email.Address,
-                                    StringComparison.InvariantCultureIgnoreCase) == 0;
+                                  true, CultureInfo.InvariantCulture) == 0;
 
         }
 
