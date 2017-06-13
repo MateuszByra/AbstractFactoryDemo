@@ -1,8 +1,6 @@
-﻿using System;
-
-namespace SpecificationDemo.Specifications
+﻿namespace SpecificationDemo.Specifications
 {
-    public interface IBuildingSpecification<T> : IEquatable<IBuildingSpecification<T>>
+    public interface IBuildingSpecification<out T>
     {
         T Build();
     }
