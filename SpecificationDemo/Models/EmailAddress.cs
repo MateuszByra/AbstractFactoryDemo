@@ -9,14 +9,7 @@ namespace SpecificationDemo.Models
 {
     public class EmailAddress : IContactInfo
     {
-        private string Address { get; }
-
-        public EmailAddress(string address)
-        {
-            if (address == null)
-                throw new ArgumentNullException();
-            this.Address = address;
-        }
+        public string Address { get; set; }
 
         public override int GetHashCode()
         {

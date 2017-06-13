@@ -1,5 +1,7 @@
 ﻿using SpecificationDemo.Interfaces;
 using SpecificationDemo.Models;
+using SpecificationDemo.Specifications.ContactInfo;
+using SpecificationDemo.Specifications.User;
 using SpecificationDemo.Validation;
 using SpecificationDemo.Validation.Infrastructure;
 using System;
@@ -33,34 +35,34 @@ namespace SpecificationDemo
 
         static void Main(string[] args)
         {
-            Person person = new Person()
-            {
-                Name = "Mateusz",
-                Surname = "Byra"
-            };
+            //Person person = new Person()
+            //{
+            //    Name = "Mateusz",
+            //    Surname = "Byra"
+            //};
 
-            Console.WriteLine("DISPLAYING IN USER INTERFACE");
-            DoSomethingWith(person,
-               new Composite<Person>((results) => results.All(res => res == true),
-                Spec<Person>.NotNull(p => p.Name)
-                .And(Spec<Person>.NotNull(p => p.Surname))
-                .And(
-                    Spec<Person>.Null(p => p.PrimaryContact)
-                    .Or(Spec<Person>.IsTrue(p => p.Contacts.Contains(p.PrimaryContact))))));
+            //Console.WriteLine("DISPLAYING IN USER INTERFACE");
+            //DoSomethingWith(person,
+            //   new Composite<Person>((results) => results.All(res => res == true),
+            //    Spec<Person>.NotNull(p => p.Name)
+            //    .And(Spec<Person>.NotNull(p => p.Surname))
+            //    .And(
+            //        Spec<Person>.Null(p => p.PrimaryContact)
+            //        .Or(Spec<Person>.IsTrue(p => p.Contacts.Contains(p.PrimaryContact))))));
 
-            Console.WriteLine("SAVING TO DATABASE:");
-            DoSomethingWith(person,
-                Spec<Person>.NonEmptyString(p => p.Name)
-                .And(Spec<Person>.NonEmptyString(p => p.Surname))
-                .And(Spec<Person>.NotNull(p => p.Contacts))
-                .And(Spec<Person>.IsTrue(p => p.Contacts.Contains(p.PrimaryContact))));
+            //Console.WriteLine("SAVING TO DATABASE:");
+            //DoSomethingWith(person,
+            //    Spec<Person>.NonEmptyString(p => p.Name)
+            //    .And(Spec<Person>.NonEmptyString(p => p.Surname))
+            //    .And(Spec<Person>.NotNull(p => p.Contacts))
+            //    .And(Spec<Person>.IsTrue(p => p.Contacts.Contains(p.PrimaryContact))));
 
             //Builder with specification
-            /*IUser user =
+            IUser user =
                 UserSpecification
                     .ForPerson()
                     .WithName("Mateusz")
-                    .WithSurname("Planck")
+                    .WithSurname("Byra")
                     .WithPrimaryContact(
                         ContactSpecification
                             .ForEmailAddress("mat.byra@gmail.com"))
@@ -71,8 +73,9 @@ namespace SpecificationDemo
                             .WithAreaCode(23)
                             .WithNumber(456789))
                      .AndNoMoreContacts()
-                     .Build();*/
+                     .Build();
 
+            Console.WriteLine(user);
             Console.WriteLine();
             Console.ReadLine();
         }

@@ -1,46 +1,28 @@
 ﻿using SpecificationDemo.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SpecificationDemo.Models
 {
     public class Machine : IUser
     {
-        public Producer Producer { get; }
-        public string Model { get; }
+        public Producer Producer { get; internal set; }
+        public string Model { get; internal set; }
+        public LegalEntity Owner { get; internal set; }
 
-        public Machine(Producer producer, string model)
-        {
-            if (producer == null)
-                throw new ArgumentNullException(nameof(producer));
-            if (string.IsNullOrEmpty(model))
-                throw new ArgumentException("Model name must be non-empty");
+        public IContactInfo PrimaryContact => this.Owner.EmailAddress;
 
-            this.Producer = producer;
-            this.Model = model;
-        }
+        internal Machine() { }
 
         public void SetIdentity(IUserIdentity identity)
         {
-            
         }
 
         public bool CanAcceptIdentity(IUserIdentity identity)
         {
-            throw new NotImplementedException();
+            return identity is MacAddress;
         }
 
-        public void Add(IContactInfo contact)
-        {
-            throw new NotImplementedException();
-        }
+        public override string ToString() =>
+            $"{this.Producer} {this.Model} owned by {this.Owner}";
 
-        public void SetPrimaryContact(IContactInfo contact)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
