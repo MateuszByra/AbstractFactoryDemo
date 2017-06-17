@@ -60,7 +60,7 @@ namespace SpecificationDemo
             //    .And(Spec<Person>.NotNull(p => p.Contacts))
             //    .And(Spec<Person>.IsTrue(p => p.Contacts.Contains(p.PrimaryContact))));
 
-            var user = GetMachine();
+            var user = GetPersonWithMultipleTheSameAdresses();
 
             Console.WriteLine(user);
             Console.WriteLine();
@@ -115,6 +115,26 @@ namespace SpecificationDemo
                            .WithCountryCode(1)
                            .WithAreaCode(23)
                            .WithNumber(456789))
+                    .AndNoMoreContacts()
+                    .Build();
+            return user;
+        }
+
+
+        private static IUser GetPersonWithMultipleTheSameAdresses()
+        {
+            //Builder with specification
+            IUser user =
+               UserSpecification
+                   .ForPerson()
+                   .WithName("Mateusz")
+                   .WithSurname("Byra")
+                   .WithPrimaryContact(
+                       ContactSpecification
+                           .ForEmailAddress("mat.byra@gmail.com"))
+                   .WithAlternateContact(
+                       ContactSpecification
+                            .ForEmailAddress("mat.byra@gmail.com"))
                     .AndNoMoreContacts()
                     .Build();
             return user;
