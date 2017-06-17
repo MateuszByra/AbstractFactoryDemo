@@ -90,7 +90,7 @@ namespace SpecificationDemo
                                     .WithCountryCode(1)
                                     .WithAreaCode(23)
                                     .WithNumber(456))
-                              .WithOtherContact(//TODO solve why it cannot convert from EmailAddress to IContactInfo
+                              .WithOtherContact(
                                  ContactSpecification.ForEmailAddress("two@prop"))
                                .AndNoMoreContacts())
                        .Build();
