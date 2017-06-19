@@ -4,7 +4,8 @@ namespace SpecificationDemo.Specifications.LegalEntity.Interfaces
 {
     public interface IExpectOtherContact
     {
-        IExpectOtherContact WithOtherContact(IBuildingSpecification<IContactInfo> contactSpec);
+        IExpectOtherContact WithOtherContact<T>(IBuildingSpecification<T> contactSpec)
+            where T : IContactInfo;
         IBuildingSpecification<Models.LegalEntity> AndNoMoreContacts();
     }
 }

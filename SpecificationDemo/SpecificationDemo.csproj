@@ -61,7 +61,7 @@
     <Compile Include="Interfaces\IContactInfo.cs" />
     <Compile Include="Interfaces\IUser.cs" />
     <Compile Include="Interfaces\IUserIdentity.cs" />
-    <Compile Include="IBuildingSpecification.cs" />
+    <Compile Include="Specifications\IBuildingSpecification.cs" />
     <Compile Include="Models\EmailAddress.cs" />
     <Compile Include="Models\IdentityCard.cs" />
     <Compile Include="Models\LegalEntity.cs" />

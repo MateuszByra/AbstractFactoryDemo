@@ -59,17 +59,21 @@ namespace SpecificationDemo.Specifications.LegalEntity
             };
         }
 
-        public IExpectOtherContact WithOtherContact(IBuildingSpecification<IContactInfo> contactSpec)
+        public IExpectOtherContact WithOtherContact<T>(IBuildingSpecification<T> contactSpec) where T: IContactInfo
         {
             if (contactSpec == null)
                 throw new ArgumentNullException();
+
+            ConvertingSpecification<IContactInfo, T> convertedSpec =
+                new ConvertingSpecification<IContactInfo, T>(contactSpec);
 
             return new LegalEntitySpecification()
             {
                 CompanyName = this.CompanyName,
                 EmailAddressSpec = this.EmailAddressSpec,
                 PhoneNumberSpec = this.PhoneNumberSpec,
-                OtherContactSpecs = new List<IBuildingSpecification<IContactInfo>>(this.OtherContactSpecs) { contactSpec }
+                OtherContactSpecs = 
+                new List<IBuildingSpecification<IContactInfo>>(this.OtherContactSpecs) { convertedSpec }
             };
         }
 

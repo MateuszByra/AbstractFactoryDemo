@@ -3,6 +3,7 @@ using SpecificationDemo.Models;
 using SpecificationDemo.Specifications;
 using SpecificationDemo.Specifications.ContactInfo;
 using SpecificationDemo.Specifications.LegalEntity;
+using SpecificationDemo.Specifications.Person.Interfaces;
 using SpecificationDemo.Specifications.Producer;
 using SpecificationDemo.Specifications.User;
 using SpecificationDemo.Validation;
@@ -60,13 +61,19 @@ namespace SpecificationDemo
             //    .And(Spec<Person>.NotNull(p => p.Contacts))
             //    .And(Spec<Person>.IsTrue(p => p.Contacts.Contains(p.PrimaryContact))));
 
-            var user = GetPersonWithMultipleTheSameAdresses();
 
-            Console.WriteLine(user);
-            Console.WriteLine();
+            //var user = GetPersonWithMultipleTheSameAdresses();
+            //Console.WriteLine(user);
+            //Console.WriteLine();
+            //var machine = GetMachine();
+            //Console.WriteLine(machine);
+            //Console.WriteLine();
+            TestUniqueEmailAdresses();
             Console.ReadLine();
         }
-        
+
+
+
 
         private static IUser GetMachine()
         {
@@ -91,11 +98,39 @@ namespace SpecificationDemo
                                     .WithAreaCode(23)
                                     .WithNumber(456))
                               .WithOtherContact(
-                                 ContactSpecification.ForEmailAddress("two@prop"))
+                                 ContactSpecification.ForEmailAddress("mat.byra@wp.pl"))
                                .AndNoMoreContacts())
                        .Build();
 
             return user;
+        }
+
+        private static void MachineUniqueAdressesTest()
+        {
+
+            IExpectAlternateContact spec =
+                UserSpecification
+                    .ForPerson()
+                    .WithName("Mateusz")
+                    .WithSurname("Byra")
+                    .WithPrimaryContact(
+                    ContactSpecification.ForEmailAddress("mat.byra@gmail.com"));
+
+            IBuildingSpecification<EmailAddress> contact =
+                ContactSpecification.ForEmailAddress("mat.byra@wp.pl");//must be unique
+
+            if (!spec.CanAdd(contact))
+            {
+                Console.WriteLine("Cannot add desired contact...");
+            }
+            else
+            {
+                spec = spec.WithAlternateContact(contact);
+                IUser user = spec.AndNoMoreContacts().Build();
+                Console.WriteLine(user);
+            }
+
+            Console.ReadLine();
         }
 
         private static IUser GetPerson()
@@ -138,6 +173,33 @@ namespace SpecificationDemo
                     .AndNoMoreContacts()
                     .Build();
             return user;
+        }
+
+        private static void TestUniqueEmailAdresses()
+        {
+            IExpectAlternateContact spec =
+                UserSpecification
+                    .ForPerson()
+                    .WithName("Mateusz")
+                    .WithSurname("Byra")
+                    .WithPrimaryContact(
+                    ContactSpecification.ForEmailAddress("mat.byra@gmail.com"));
+
+            IBuildingSpecification<EmailAddress> contact =
+                ContactSpecification.ForEmailAddress("mat.byra@wp.pl");//must be unique
+
+            if(!spec.CanAdd(contact))
+            {
+                Console.WriteLine("Cannot add desired contact...");
+            }
+            else
+            {
+                spec = spec.WithAlternateContact(contact);
+                IUser user = spec.AndNoMoreContacts().Build();
+                Console.WriteLine(user);
+            }
+
+            Console.ReadLine();
         }
     }
 }

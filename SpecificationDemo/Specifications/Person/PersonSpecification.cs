@@ -43,7 +43,8 @@ namespace SpecificationDemo.Specifications.Person
             };
         }
 
-        public IExpectAlternateContact WithPrimaryContact<T>(IBuildingSpecification<T> primaryContactSpec) where T : IContactInfo
+        public IExpectAlternateContact WithPrimaryContact<T>
+            (IBuildingSpecification<T> primaryContactSpec) where T : IContactInfo
         {
             if (primaryContactSpec == null)
                 throw new ArgumentNullException();
